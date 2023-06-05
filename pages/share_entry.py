@@ -19,6 +19,13 @@ from modules.styles import set_background_image
 
 from data.database import get_combo_list
 
+"""
+This page is still under construction as I am not sure how
+to use PySide6 to generate a text file and then prompt a user
+on where to save said file. Once I am able to get this completed,
+the share button will be enabled!
+"""
+
 class ShareEntry(QMainWindow):
     def __init__(self, window_manager):
         super(ShareEntry, self).__init__()
