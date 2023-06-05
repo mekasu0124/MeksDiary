@@ -1,7 +1,7 @@
 ﻿{
-    "setup": "True",
+    "setup": "False",
     "profile": {
-        "name": "Mekasu Lisenby",
-        "email": "mekasurenae@gmail.com"
+        "name": "",
+        "email": ""
     }
 }
