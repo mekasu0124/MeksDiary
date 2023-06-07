@@ -62,6 +62,12 @@ def get_error_style():
 def get_error_label_style():
     return "border: 2px solid red;\
                 border-radius: 20px;\
+                    background-color: transparent;\
+                        color: red;"
+
+def get_error_label_style():
+    return "border: 2px solid red;\
+                border-radius: 20px;\
                     color: red;"
 
 def get_combo_style():
@@ -69,6 +75,12 @@ def get_combo_style():
                 border-radius: 10px;\
                     background-color: transparent;\
                         color: blue;"
+
+def get_success_style():
+    return "border: 2px solid green;\
+                border-radius: 20px;\
+                    background-color: transparent;\
+                        color: green;"
 
 def set_background_image():
     return "background-image: url('./images/bg_image.jpg');\

@@ -17,6 +17,8 @@ from modules.styles import get_button_style
 from modules.styles import get_line_style
 from modules.styles import get_error_style
 from modules.styles import get_text_line_style
+from modules.styles import get_success_style
+from modules.styles import get_error_label_style
 from modules.styles import set_background_image
 
 from data.database import add_to_db
@@ -35,6 +37,8 @@ class NewEntry(QMainWindow):
         self.line_style = get_line_style()
         self.line_text_style = get_text_line_style()
         self.error_style = get_error_style()
+        self.success_style = get_success_style()
+        self.error_label_style = get_error_label_style()
 
         self.setStyleSheet(set_background_image())
         self.setWindowTitle("Mek's Diary - New Entry")
@@ -73,14 +77,30 @@ class NewEntry(QMainWindow):
         self.details.setStyleSheet(self.line_text_style)
         self.details.setFont(self.small_font)
 
+        self.success_label = QLabel("Your Submission Has Been Saved!",self.frame)
+        self.success_label.setGeometry(50,580,460,50)
+        self.success_label.setStyleSheet(self.success_style)
+        self.success_label.setWordWrap(False)
+        self.success_label.setFont(self.regular_font)
+        self.success_label.setAlignment(Qt.AlignCenter)
+        self.success_label.hide()
+
+        self.error_label = QLabel("Your Submission Failed To Submit. Contact Support.", self.frame)
+        self.error_label.setGeometry(50,580,460,50)
+        self.error_label.setStyleSheet(self.error_label_style)
+        self.error_label.setWordWrap(False)
+        self.error_label.setFont(self.regular_font)
+        self.error_label.setAlignment(Qt.AlignCenter)
+        self.error_label.hide()
+
         self.button = QPushButton("Submit", self.frame)
-        self.button.setGeometry(50,600,460,50)
+        self.button.setGeometry(50,640,460,50)
         self.button.setStyleSheet(self.button_style)
         self.button.setFont(self.regular_font)
         self.button.clicked.connect(self.check_inputs)
 
         self.button = QPushButton("Back", self.frame)
-        self.button.setGeometry(50,660,460,50)
+        self.button.setGeometry(50,700,460,50)
         self.button.setStyleSheet(self.button_style)
         self.button.setFont(self.regular_font)
         self.button.clicked.connect(self.back_button)
@@ -92,7 +112,12 @@ class NewEntry(QMainWindow):
                 write_check = add_to_db(self.title.text(), today, self.details.toPlainText())
 
                 if write_check:
-                    self.window_manager.close_window()
+                    self.success_label.show()
+
+                    self.timer = QTimer()
+                    self.timer.setInterval(600)
+                    self.timer.timeout.connect(self.previous_screen)
+                    self.timer.start()
                 else:
                     raise
             else:
@@ -121,3 +146,8 @@ class NewEntry(QMainWindow):
 
         self.title.setStyleSheet(self.label_style)
         self.details.setStyleSheet(self.line_style)
+    
+    def previous_screen(self):
+        self.timer.stop()
+
+        self.window_manager.close_window()
